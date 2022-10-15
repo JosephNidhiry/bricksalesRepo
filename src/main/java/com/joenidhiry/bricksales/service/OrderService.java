@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,10 @@ public class OrderService {
     }
 
     public List<Order> getOrders() {
-        return orderRepository.findAll();
+        List<Order> lorders = new ArrayList<>();
+        orderRepository.findAll()
+                .forEach(lorders::add);
+        return lorders;
     }
 
     public Optional<Order> getOrderByRef(int id) {
