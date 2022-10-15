@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,7 +15,7 @@ public class Order {
     private String customerName;
     private BigDecimal quantityOrdered;
     private Boolean orderFulfilled;
-    private LocalDateTime dispatchDate;
+    private LocalDate dispatchDate;
 
     public Order(String customerName, BigDecimal quantityOrdered) {
         this.customerName = customerName;
@@ -50,7 +51,8 @@ public class Order {
         this.orderFulfilled = orderFulfilled;
     }
 
-    public void setDispatchDate(LocalDateTime dispatchDate) {
+
+    public void setDispatchDate(LocalDate dispatchDate) {
         this.dispatchDate = dispatchDate;
     }
 }

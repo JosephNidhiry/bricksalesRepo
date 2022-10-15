@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,11 @@ public class BrickOrderController {
     @GetMapping("/BrickOrder/{id}")
     public ResponseEntity<Order> getOrderByReference(@PathVariable int orderReference) {
         Optional<Order> optionalOrderByRef   = orderService.getOrderByRef(orderReference);
-        return ResponseEntity.ok(optionalOrderByRef.get());
+        if (optionalOrderByRef.isPresent()) {
+            return ResponseEntity.ok(optionalOrderByRef.get());
+        } else {
+            return ResponseEntity.ok(null);
+        }
     }
 
     @GetMapping("/BrickOrders")
@@ -35,11 +41,12 @@ public class BrickOrderController {
     }
 
     @PostMapping("/DispatchBrickOrder/{orderReference}/{dispatchDate}")
-    public ResponseEntity<Order> dispatchOrder(@PathVariable int orderReference, @PathVariable String dispatchDate) {
+    public ResponseEntity<Order>  dispatchOrder(@PathVariable int orderReference, @PathVariable String dispatchDate) {
+        LocalDate orderDispatchDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(dispatchDate));
         Optional<Order> optionalOrderByRef = orderService.getOrderByRef(orderReference);
         String message1;
         if (optionalOrderByRef.isPresent()) {
-    /*        return optionalOrderByRef.get().setDispatchDate(orderReference, dispatchDate); */
+              optionalOrderByRef.get().setDispatchDate(orderDispatchDate);
               return ResponseEntity.ok(optionalOrderByRef.get());
         } else {
             return ResponseEntity.ok(null);
