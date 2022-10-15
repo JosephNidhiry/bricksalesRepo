@@ -7,9 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +40,7 @@ public class BrickOrderController {
 
     @PostMapping("/DispatchBrickOrder/{orderReference}/{dispatchDate}")
     public ResponseEntity<Order>  dispatchOrder(@PathVariable int orderReference, @PathVariable String dispatchDate) {
-        LocalDate orderDispatchDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(dispatchDate));
+        LocalDate orderDispatchDate = LocalDate.from(DateTimeFormatter.ofPattern("dd-mm-yyy").parse(dispatchDate));
         Optional<Order> optionalOrderByRef = orderService.getOrderByRef(orderReference);
         String message1;
         if (optionalOrderByRef.isPresent()) {
