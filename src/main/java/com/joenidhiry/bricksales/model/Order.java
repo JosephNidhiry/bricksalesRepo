@@ -1,5 +1,7 @@
 package com.joenidhiry.bricksales.model;
 
+import io.micrometer.core.lang.Nullable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +16,9 @@ public class Order {
     private Integer orderReference;
     private String customerName;
     private BigDecimal quantityOrdered;
+    @Nullable
     private Boolean orderFulfilled;
+    @Nullable
     private LocalDate dispatchDate;
 
     public Order(String customerName, BigDecimal quantityOrdered) {
