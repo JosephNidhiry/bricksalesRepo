@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,7 +26,7 @@ public class BrickOrderController {
 
     @GetMapping("/BrickOrder/{id}")
     public ResponseEntity<Order> getOrderByReference(@PathVariable int orderReference) {
-        Optional<Order> optionalOrderByRef   = orderService.getOrderByRef(orderReference);
+        Optional<Order> optionalOrderByRef = orderService.getOrderByRef(orderReference);
         if (optionalOrderByRef.isPresent()) {
             return ResponseEntity.ok(optionalOrderByRef.get());
         } else {
@@ -40,17 +41,20 @@ public class BrickOrderController {
     }
 
     @PostMapping("/DispatchBrickOrder/{orderReference}/{dispatchDate}")
-    public ResponseEntity<Order>  dispatchOrder(@PathVariable int orderReference, @PathVariable String dispatchDate) {
-        LocalDate orderDispatchDate = LocalDate.from(DateTimeFormatter.ofPattern("dd-mm-yyy").parse(dispatchDate));
+    public ResponseEntity<Order> dispatchOrder(@PathVariable int orderReference, @PathVariable String dispatchDate) {
+        LocalDate orderDispatchDate = LocalDate.from(DateTimeFormatter.ofPattern("dd-MM-yyyy").parse(dispatchDate));
         Optional<Order> optionalOrderByRef = orderService.getOrderByRef(orderReference);
         String message1;
         if (optionalOrderByRef.isPresent()) {
-              optionalOrderByRef.get().setDispatchDate(orderDispatchDate);
-              return ResponseEntity.ok(optionalOrderByRef.get());
+            optionalOrderByRef.get().setDispatchDate(orderDispatchDate);
+            return ResponseEntity.ok(optionalOrderByRef.get());
         } else {
             return ResponseEntity.ok(null);
         }
-
     }
 
+    @PostMapping("/UpdateQuantityOrdered/{orderReference}/{newQuantity}")
+    public String updateQuantityOrdered(@PathVariable int orderReference, @PathVariable BigDecimal newQuantity) {
+       return orderService.setQuantityOrdered(orderReference, newQuantity);
+    }
 }

@@ -5,6 +5,7 @@ import com.joenidhiry.bricksales.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +31,13 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    public String updateOrderQuantity(Order order) {
+    public String setQuantityOrdered(int orderReference, BigDecimal quantityOrdered) {
         String message;
-        Optional<Order> optionalOrder = orderRepository.findById(order.getOrderReference());
+        Optional<Order> optionalOrder = orderRepository.findById(orderReference);
         if (optionalOrder.isPresent()) {
             Order originalOrder = optionalOrder.get();
             if (!originalOrder.getOrderDispatched()) {
-                originalOrder.setQuantityOrdered(order.getQuantityOrdered());
+                originalOrder.setQuantityOrdered(quantityOrdered);
                 orderRepository.save(originalOrder);
                 message = "New Quantity saved since order is yet to be dispatched";
             } else {
@@ -49,7 +50,7 @@ public class OrderService {
         return message;
         }
 
-    public String updateOrderDispatchDate(int orderReference, LocalDate dispatchDate) {
+   public String updateOrderDispatchDate(int orderReference, LocalDate dispatchDate) {
         String message;
         Optional<Order> optionalOrder = orderRepository.findById(orderReference);
         if (optionalOrder.isPresent()) {

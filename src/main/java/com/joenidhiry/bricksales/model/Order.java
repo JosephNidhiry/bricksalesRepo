@@ -1,7 +1,4 @@
 package com.joenidhiry.bricksales.model;
-
-
-
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
