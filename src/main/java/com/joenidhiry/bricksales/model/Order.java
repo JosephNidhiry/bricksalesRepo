@@ -1,6 +1,8 @@
 package com.joenidhiry.bricksales.model;
 
-import io.micrometer.core.lang.Nullable;
+
+
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
