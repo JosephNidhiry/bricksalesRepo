@@ -8,22 +8,30 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-@Configuration
-@EnableAutoConfiguration
-@EntityScan(basePackageClasses= Order.class)
+import javax.sql.DataSource;
+
 @SpringBootApplication
 public class BricksalesApplication {
 
-	@Autowired
-	OrderRepository orderRepository;
 
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BricksalesApplication.class, args);
 	}
 
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				.addScript("classpath:jdbc/schema.sql")
+				.build();
+	}
 }
