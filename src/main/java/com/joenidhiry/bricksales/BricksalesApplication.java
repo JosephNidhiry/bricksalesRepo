@@ -27,11 +27,4 @@ public class BricksalesApplication {
 		SpringApplication.run(BricksalesApplication.class, args);
 	}
 
-	@Bean
-	public DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder()
-				.setType(EmbeddedDatabaseType.H2)
-				.addScript("classpath:jdbc/schema.sql")
-				.build();
-	}
 }
