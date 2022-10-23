@@ -21,6 +21,9 @@ public class Order {
     @Nullable
     private LocalDate dispatchDate;
 
+    public Order() {
+    }
+
     public Order(String customerName, BigDecimal quantityOrdered) {
         this.customerName = customerName;
         this.quantityOrdered = quantityOrdered;
