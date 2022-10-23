@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 
 @SpringBootApplication
-@EnableJpaRepositories
+
 public class BricksalesApplication {
 	@Autowired
 	OrderService orderService;
